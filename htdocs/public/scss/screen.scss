@@ -1,0 +1,68 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import "compass/utilities/general/clearfix";
+
+%clearfix {
+    @include clearfix;
+}
+
+body {
+    padding: 50px;
+    font-size: 16px;
+    line-height: 1.2;
+    letter-spacing: 1px;
+}
+
+h1 {
+    padding-bottom: 20px;
+    font-size: 40px;
+}
+
+#send {
+    @extend %clearfix;
+
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+
+    p {
+        float: left;
+        padding-right: 10px;
+    }
+}
+
+#questions {
+    padding: 20px 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+    li {
+        padding-bottom: 30px;
+    }
+        .name {
+            padding-bottom: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #A3C19D;
+        }
+        .q {
+            padding: 0 0 10px 10px;
+            color: #444;
+
+            &:first-letter {
+                font-size: 20px;
+                font-weight: bold;
+                color: #F3B68C;
+            }
+
+        }
+        .time {
+            padding-left: 10px;
+            color: #AFDFE6;
+        }
+}
