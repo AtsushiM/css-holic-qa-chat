@@ -48,10 +48,12 @@ app.get('/', routes.index);
 server.listen(app.get('port'));
 
 io.sockets.on('connection', function(socket) {
-    QA.find({}).sort('+time').execFind(function(err, items) {
+    QA.find({}).sort({time: -1}).limit(50).execFind(function(err, items) {
         if (err) {
             console.log(err);
         }
+
+        items = items.reverse();
 
         socket.emit('initializequestion', items);
     });

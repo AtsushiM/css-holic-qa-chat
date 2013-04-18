@@ -1,1 +1,107 @@
-(function(){function e(e){e.time=""+new Date(e.time);var n=C.util.template(l,e),t=C.dom.create("li");C.dom.html(t,n),u.insertBefore(t)}var n=io.connect(),t=C.$,i=t("#send"),o=i.find(".username input"),a=i.find(".question input"),u=t("#questions"),l=t("#template-question").html();C.dom.create("div"),n.on("initializequestion",function(n){console.log(n);var t,i=n.length;for(t=0;i>t;t++)e(n[t])}),i.on("submit",function(e){e.preventDefault();var t=o.val(),i=a.val();t||(t="No name"),t&&i&&(n.emit("sendquestion",{name:t,q:i}),a.val(""))}),n.on("recivequestion",function(n){e(n)})})();
+// main
+(function() {
+    var socket = io.connect(),
+        viewSend = new C.View({
+            el: '#send',
+            init: function() {
+                this.username = this.el.find('.username input');
+                this.question = this.el.find('.question input');
+            },
+            events: {
+                me: {
+                    'submit': 'submit'
+                }
+            },
+            submit: function(e) {
+                e.preventDefault();
+
+                var name = this.username.val(),
+                    q = this.question.val();
+
+                if (!q) {
+                    return;
+                }
+
+                if (!name) {
+                    name = 'No name';
+                }
+
+                socket.emit('sendquestion', {
+                    name: name,
+                    q: q
+                });
+
+                this.question.val('');
+            }
+        }),
+        ModelQuestion = C.Model.extend({
+            defaults: {
+                name: '',
+                q: '',
+                time: 0
+            },
+            validate: {
+                name: C.validate.isString,
+                q: C.validate.isString,
+                time: C.validate.isNumber
+            }
+        }),
+        CollectionQuestion = C.Model.extend({
+            defaults: {
+                collection: []
+            },
+            validate: {
+                collection: C.validate.isArray
+            },
+            addQuestion: function(model) {
+                var collection = this.get('collection');
+
+                collection.push(model);
+
+                this.set('collection', collection);
+            }
+        }),
+        collectionQuestion = new CollectionQuestion({}),
+        viewQuestions = new C.View({
+            el: '#questions',
+            template: C.$('#template-question').html(),
+            model: collectionQuestion,
+            init: function() {
+                var that = this;
+
+                that.model.on('change', that.render);
+
+                socket.on('recivequestion', function(data) {
+                    that.model.addQuestion(new ModelQuestion({
+                        defaults: data
+                    }));
+                });
+            },
+            events: {},
+            render: function(dataCollection) {
+                var collection = dataCollection.collection;
+                var data = collection[collection.length - 1].get();
+
+                console.log(data);
+                data.time = '' + new Date(data.time);
+
+                var html = C.util.template(this.template, data),
+                    li = C.dom.create('li');
+
+                C.dom.html(li, html);
+
+                this.el.insertBefore(li);
+            }
+        });
+
+    socket.on('initializequestion', function(datas) {
+        var i = 0,
+            len = datas.length;
+
+        for (; i < len; i++) {
+            collectionQuestion.addQuestion(new ModelQuestion({
+                defaults: datas[i]
+            }));
+        }
+    });
+}());

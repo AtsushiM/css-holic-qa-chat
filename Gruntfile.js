@@ -5,7 +5,7 @@ module.exports = function(grunt) {
         concat: {
             dist: {
                 files: {
-                    'htdocs/public/javascripts/src/_concat_js': [
+                    'htdocs/public/javascripts/main.js': [
                         'htdocs/public/javascripts/src/main.js'
                     ]
                 }
@@ -14,8 +14,8 @@ module.exports = function(grunt) {
         uglify: {
             dist: {
                 files: {
-                    'htdocs/public/javascripts/main.js': [
-                        'htdocs/public/javascripts/src/_concat_js'
+                    'htdocs/public/javascripts/main.min.js': [
+                        'htdocs/public/javascripts/main.js'
                     ]
                 }
             }
