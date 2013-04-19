@@ -19,7 +19,61 @@ body {
 
 h1 {
     padding-bottom: 20px;
-    font-size: 40px;
+    font-size: 70px;
+    font-family: 'Sniglet', cursive;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -1px;
+
+    .letter0 {
+        color: #48833B;
+    }
+    .letter1 {
+        color: #EDC301;
+    }
+    .letter2 {
+        color: #E16817;
+    }
+    .letter4 {
+        color: #B6305F;
+    }
+    .letter5 {
+        color: #51AEC6;
+    }
+    .letter6 {
+        color: #9AB53C;
+    }
+    .letter7 {
+        color: #FBD700;
+    }
+    .letter8 {
+        color: #48833B;
+    }
+
+    .letter10 {
+        color: #48833B;
+    }
+    .letter11 {
+        color: #EDC301;
+    }
+    .letter12 {
+        color: #E16817;
+    }
+    .letter14 {
+        color: #B6305F;
+    }
+    .letter15 {
+        color: #51AEC6;
+    }
+    .letter16 {
+        color: #9AB53C;
+    }
+    .letter17 {
+        color: #FBD700;
+    }
+    .letter18 {
+        color: #48833B;
+    }
 }
 
 #send {
@@ -53,6 +107,7 @@ h1 {
         .q {
             padding: 0 0 10px 10px;
             color: #444;
+            font-size: 16px;
 
             &:first-letter {
                 font-size: 20px;

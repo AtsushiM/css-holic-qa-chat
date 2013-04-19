@@ -46,42 +46,22 @@
                 time: C.validate.isNumber
             }
         }),
-        collectionQuestion = new C.Model.extend({
-            defaults: {
-                collection: []
-            },
-            validate: {
-                collection: C.validate.isArray
-            },
-            addQuestion: function(model) {
-                var collection = this.get('collection');
-
-                collection.push(model);
-
-                this.set('collection', collection);
-            }
-        })(),
+        collectionQuestion = new C.Collection(),
         viewQuestions = new C.View({
             el: '#questions',
             template: C.$('#template-question').html(),
-            model: collectionQuestion,
+            collection: collectionQuestion,
             init: function() {
                 var that = this;
 
-                that.model.on('change', that.render);
+                that.collection.on('change', that.render);
 
-                socket.on('recivequestion', function(data) {
-                    that.model.addQuestion(new ModelQuestion({
-                        defaults: data
-                    }));
-                });
+                socket.on('recivequestion', addQuestion);
             },
             events: {},
-            render: function(dataCollection) {
-                var collection = dataCollection.collection;
-                var data = collection[collection.length - 1].get();
+            render: function(data, index, collection) {
+                data = data.get();
 
-                console.log(data);
                 data.time = '' + new Date(data.time);
 
                 var html = C.util.template(this.template, data),
@@ -98,9 +78,32 @@
             len = datas.length;
 
         for (; i < len; i++) {
-            collectionQuestion.addQuestion(new ModelQuestion({
-                defaults: datas[i]
-            }));
+            addQuestion(datas[i]);
         }
     });
+
+    function addQuestion(data) {
+        collectionQuestion.add(new ModelQuestion({
+            defaults: data
+        }));
+    }
+
+    // title styling
+    (function() {
+        var $h1 = C.$('h1'),
+            h1_text = $h1.html().replace('&amp;', '&'),
+            $span,
+            i;
+
+        $h1.html(
+            '<span>' + h1_text.split('').join('</span><span>') + '</span>'
+        );
+
+        $span = $h1.find('span');
+
+        i = $span.length;
+        for (; i--;) {
+            C.dom.addClass($span[i], 'letter' + i);
+        }
+    }());
 }());
