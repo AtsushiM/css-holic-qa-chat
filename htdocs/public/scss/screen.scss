@@ -113,7 +113,7 @@ h1 {
             font-size: 16px;
 
             &:first-letter {
-                font-size: 20px;
+                font-size: 22px;
                 font-weight: bold;
                 color: #F3B68C;
             }
@@ -121,6 +121,7 @@ h1 {
         }
         .time {
             padding-left: 10px;
+            letter-spacing: 0;
             color: #AFDFE6;
         }
 }

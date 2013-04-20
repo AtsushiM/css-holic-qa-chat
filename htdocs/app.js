@@ -27,6 +27,8 @@ var express = require('express'),
     server = http.createServer(app),
     io = socket.listen(server);
 
+io.enable('browser client minification');
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');

@@ -14,7 +14,7 @@ cssholicqachat.socket.on('initializequestion', function(datas) {
 // title styling
 (function() {
     var $h1 = C.$('h1'),
-        h1_text = $h1.html().replace('&amp;', '&'),
+        h1_text = C.util.unescape($h1.html()),
         $span,
         i;
 
