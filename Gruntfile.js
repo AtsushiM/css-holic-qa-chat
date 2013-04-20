@@ -6,6 +6,11 @@ module.exports = function(grunt) {
             dist: {
                 files: {
                     'htdocs/public/javascripts/main.js': [
+                        'htdocs/public/javascripts/src/namespace.js',
+                        'htdocs/public/javascripts/src/util.js',
+                        'htdocs/public/javascripts/src/collections.js',
+                        'htdocs/public/javascripts/src/models.js',
+                        'htdocs/public/javascripts/src/views.js',
                         'htdocs/public/javascripts/src/main.js'
                     ]
                 }
